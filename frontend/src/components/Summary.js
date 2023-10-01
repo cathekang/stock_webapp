@@ -1,33 +1,10 @@
 import React from "react";
 
-export default function Summary({people})
-{
+export default function Summary({portfolio}) {
     return (
-        <>
-        {
-            people.map( (person,index) => {
-                return (
-                    <div key = {index}>
-                    <p> Person name: {person.name} </p>
-                    Stocks:
-                        <>
-                            {
-                                person.stocks.map( (stock,index) => {
-                                    return (
-                                        <div key = {index} >
-                                        <span> {stock.ticker}</span>
-                                        <span> {stock.shares} </span>
-                                        </div>
-                                    )
-                                })
-                            }
-                        </>
-                    <p> Portfolio Value: {person.value} </p>
-                    </div>
-                )
-            } )
-        }
-        </>
+        portfolio.map((stock,index) => {
+            return <p key = {index}> Stock: {stock.ticker} Shares: {stock.shares} Purchase Price: {stock.initialPrice} </p>
+        } )
     );
 
 }
