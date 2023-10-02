@@ -1,11 +1,28 @@
 from fastapi import FastAPI, HTTPException
-from typing import List, Dict
+from fastapi.middleware.cors import CORSMiddleware
+from typing import List
 from pydantic import BaseModel
 import yfinance as yf
 import numpy as np
 
 app = FastAPI()
 
+origins = [
+    "http://localhost:3000",
+    "http://localhost:8000"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+class Data(BaseModel):
+    ticker: str
+    shares: float
 class Stock(BaseModel):
     ticker: str
     company: str
@@ -13,36 +30,35 @@ class Stock(BaseModel):
     price_at_purchase: float
 
 #Dictionary holding ticker, number of shares, 
-portfolio: List[Stock] = [
-    Stock(ticker="AAPL", company ="Apple", shares = 0, price_at_purchase= 0) 
-]
-transactions: List[Stock] = [
-    Stock(ticker = "AAPL", company = "Apple", shares = 10, price_at_purchase = 271.3),
-    Stock(ticker = "AAPL", company = "Apple", shares = 10, price_at_purchase = 271.3),
-    Stock(ticker = "AAPL", company = "Apple", shares = 10, price_at_purchase = 271.3)
-    
-]
+portfolio: List[Stock] = []
+transactions: List[Stock] = []
 
 @app.post("/buy")
-def buy_stocks(ticker: str, shares: float):
-    stock = yf.Ticker(ticker)
+async def buy_stocks(data: Data):
+    ticker = data.ticker
+    shares = data.shares
+    
+    try:
+        stock = yf.Ticker(ticker)
+        info = stock.info
+    except:
+        raise HTTPException(status_code=422, detail = "Invalid ticker")
 
     #Error Handling
-    if stock.info['currentPrice'] == None:
-        raise HTTPException(status_code=404, detail = "Ticker does not exist")
     if shares < 0:
         raise HTTPException(status_code=422, detail = "Invalid amount of shares")
     
     found = False
     for stocks in portfolio:
         if stocks.ticker == ticker:
+            stocks.price_at_purchase =  (info['currentPrice'] * shares + stocks.shares * stocks.price_at_purchase)/2
             stocks.shares +=  shares
             found = True
     if not found:
-        new_stock = Stock(ticker = ticker, company = stock.info['longName'], shares = shares, price_at_purchase=stock.info['currentPrice'])
+        new_stock = Stock(ticker = ticker, company = info['longName'], shares = shares, price_at_purchase=info['currentPrice'])
         portfolio.append(new_stock)
     
-    transactions.append((Stock(ticker = ticker, company = stock.info['longName'], shares = shares, price_at_purchase=stock.info['currentPrice'])))
+    transactions.append((Stock(ticker = ticker, company = info['longName'], shares = shares, price_at_purchase=info['currentPrice'])))
     
     return {
         "success" : True,
@@ -51,18 +67,28 @@ def buy_stocks(ticker: str, shares: float):
     }
 
 @app.post("/sell")
-def sell_stocks(ticker:str, shares:float):
+def sell_stocks(data: Data):
+    ticker = data.ticker
+    shares = data.shares
+    try:
+        stock = yf.Ticker(ticker)
+        info = stock.info
+    except:
+        raise HTTPException(status_code=422, detail = "Invalid ticker")
+
     found = False
     for stock in portfolio:
         if stock.ticker == ticker:
             if shares > stock.shares:
                 raise HTTPException(status_code=422, detail = "Invalid amount of shares")
+            elif shares == stock.shares:
+                portfolio.remove(Stock(ticker = ticker, shares = shares, company = stock.company, price_at_purchase= stock.price_at_purchase))
             stock.shares -= shares
             found = True
 
     if not found:
         raise HTTPException(status_code=404, detail = "Stock does not exist in your portfolio")
-    transactions.append((Stock(ticker = ticker, company = stock.info['longName'], shares = -shares, price_at_purchase=stock.info['currentPrice'])))
+    transactions.append((Stock(ticker = ticker, company = info['longName'], shares = -shares, price_at_purchase=info['currentPrice'])))
     return {
         "success" : True,
         "data" : portfolio,

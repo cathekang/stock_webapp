@@ -2,7 +2,6 @@ import React from "react";
 import {Tr, Td} from "@chakra-ui/react";
 
 export default function TransactionItem({transaction}) {
-    console.log(transaction)
     return (
         <Tr>
             <Td> {transaction.ticker}</Td>

@@ -13,18 +13,17 @@ import {
 import TransactionItem from "./TransactionItem";
 
 export default function TransactionTable({transactions}) {
-    console.log("Transaction table")
     return (
-        <VStack>
+        <VStack bg= "#6495ED">
             <Text> Recent Transactions </Text>
-            <Table size="sm" variant = "striped" colorScheme="whiteAlpha" width={20}>
+            <Table size="sm" variant = "striped" colorScheme="whiteAlpha">
                 <TableCaption> All buy and sell records</TableCaption>
                 <Thead>
                     <Tr>
                     <Th> Ticker </Th>
                     <Th> Company </Th>
                     <Th> Number of Shares </Th>
-                    <Th> Purchase Price</Th>
+                    <Th> Selling Price</Th>
                     </Tr>
                 </Thead>
                 <Tbody>

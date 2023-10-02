@@ -23,11 +23,17 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+html{
+  background-image: url("./stock-market-pictures.jpg");
+  background-position: 'center';
+  background-size: 'cover';
+  background-repeat: 'no-repeat';
+  width: '100vw';
+  height: '100vh';
+}
 .App-link {
   color: #61dafb;
 }
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
