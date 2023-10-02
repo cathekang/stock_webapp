@@ -30,7 +30,16 @@ class Stock(BaseModel):
     price_at_purchase: float
 
 #Dictionary holding ticker, number of shares, 
-portfolio: List[Stock] = []
+portfolio: List[Stock] = [
+    Stock(ticker = "AAPL", company="Apple Inc.", shares=10,
+          price_at_purchase=173.75),
+    Stock(ticker = "LULU", company="Lululemon Athletica Inc.", shares = 15, 
+          price_at_purchase=382.86),
+    Stock(ticker="BAC", company = "Bank of American Copopration", shares = 12.5,
+          price_at_purchase = 26.70),
+    Stock(ticker="DIS", company="The Walt Disney Company", shares = 8,
+          price_at_purchase=81.67)
+]
 transactions: List[Stock] = []
 
 @app.post("/buy")
@@ -128,3 +137,15 @@ def get_abs_gain():
         absolute_gain += cur_price - stock.price_at_purchase
 
     return absolute_gain
+
+@app.get("/get_gain_percent")
+def get_gain_percent():
+    curr_portfolio_value = get_portfolio_value()
+    initial_portfolio_value = 0
+    for stock in portfolio:
+        initial_portfolio_value += stock.price_at_purchase * stock.shares
+
+    if initial_portfolio_value == 0:
+        initial_portfolio_value = 1
+    gain_percent = (curr_portfolio_value - initial_portfolio_value)/initial_portfolio_value
+    return gain_percent
