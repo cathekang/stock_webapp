@@ -33,7 +33,7 @@ export default function ProjectDescription({
 			<Container border='2px' borderColor='gray.200' bg='#6809E5'>
 				<VStack width = {40}>
 					<Text size="md" fontSize="xs">Percent Gain</Text>
-					<Text fontSize="2xl">{percentGain.toFixed(2)}</Text>
+					<Text fontSize="2xl">%{percentGain.toFixed(2)}</Text>
 				</VStack>
 			</Container>
 		</HStack>
