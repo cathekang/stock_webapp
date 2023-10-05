@@ -55,7 +55,7 @@ import {
                         </ModalBody>
                         <ModalFooter>
                             <Button
-                                bg = "blue"
+                                bg = "#127DE2"
                                 color = "white"
                                 size = "lg"
                                 onClick = {setCandlestickStock}

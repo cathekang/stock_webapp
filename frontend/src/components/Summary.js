@@ -7,20 +7,29 @@ import {
     Tbody,
     Tr,
     Th,
+    StackDivider
 } from "@chakra-ui/react";
 import SummaryItem from "./SummaryItem";
 
 export default function Summary({portfolio}) {
     return (
-        <VStack bg= "#20B2AA" >
-            <Text> Your Portfolio </Text>
-            <Table size="sm" variant = "striped" colorScheme="whiteAlpha">
-                <Thead>
+        <VStack bg= "white" 
+            borderWidth='3px'
+            borderColor = "#127DE2"
+            divider = {<StackDivider borderColor = "gray.200"/>}
+        >
+            <Text fontWeight = "bold" color ="#127DE2">
+                Your Portfolio </Text>
+            <Table size="sm"
+                color = "#127DE2" 
+                variant = "striped"
+                colorScheme="blackAlpha">
+                <Thead >
                     <Tr>
-                    <Th> Ticker </Th>
-                    <Th> Company </Th>
-                    <Th> Number of Shares </Th>
-                    <Th> Average Buying Price </Th>
+                    <Th color = "#127DE2"> Ticker </Th>
+                    <Th color = "#127DE2"> Company </Th>
+                    <Th color = "#127DE2"> Number of Shares </Th>
+                    <Th color = "#127DE2"> Average Buying Price </Th>
                     </Tr>
                 </Thead>
                 <Tbody>

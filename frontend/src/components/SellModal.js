@@ -63,7 +63,7 @@ import {
                         </ModalBody>
                         <ModalFooter>
                             <Button
-                                bg = "tomato"
+                                bg = "#EC414B"
                                 color = "white"
                                 size = "lg"
                                 onClick = {sellStock}

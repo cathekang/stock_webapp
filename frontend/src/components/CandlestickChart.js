@@ -19,13 +19,16 @@ const data = {
 		},
 		title: {
 			text: symbol,
-			align: 'left'
+			align: 'left',
+			style: {
+				color: '#127DE2'
+			}
 		},
 		noData: {
 			text: 'Loading...'
 		},
 		xaxis: {
-			type: 'datetime'
+			type: 'datetime',
 		},
 		yaxis: {
 			tooltip: {
@@ -37,17 +40,27 @@ const data = {
 			tools: {
 				pan: true
 			}
+		},
+		plotOptions: {
+			candlestick: {
+			  colors: {
+				upward: '#90E614',
+				downward: '#127DE2'
+			  },
+			}
 		}
 	},
 };
 
 
   return (
-  <Stack bg="white" color = "black">
+  <Stack bg="white" 
+  	borderWidth = "3px"
+	borderColor = "#127DE2">
 		<Chart
 			type="candlestick"
 			height={290}
-			width={700}
+			width={775}
 			options={data.options}
 			series={data.series}
       	/>

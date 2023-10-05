@@ -7,23 +7,34 @@ import {
     Tbody,
     Tr,
     Th,
-    TableCaption
+    TableCaption,
+    StackDivider
 } from "@chakra-ui/react";
 
 import TransactionItem from "./TransactionItem";
 
 export default function TransactionTable({transactions}) {
     return (
-        <VStack bg= "#6495ED">
-            <Text> Recent Transactions </Text>
-            <Table size="sm" variant = "striped" colorScheme="whiteAlpha">
-                <TableCaption> All buy and sell records</TableCaption>
+        <VStack bg= "white"
+            borderWidth = '3px'
+            borderColor = "#127DE2"
+            divider = {<StackDivider borderColor = "gray.200"/>}
+        >
+            <Text fontWeight="bold" color = "#127DE2">
+                Recent Transactions </Text>
+            <Table size="sm"
+                colorScheme = "blackAlpha"
+                variant = "striped"
+                color= "#127DE2">
+                <TableCaption color = "#127DE2"> 
+                    All buy and sell records
+                </TableCaption>
                 <Thead>
                     <Tr>
-                    <Th> Ticker </Th>
-                    <Th> Company </Th>
-                    <Th> Number of Shares </Th>
-                    <Th> Selling Price</Th>
+                    <Th color = "#127DE2"> Ticker </Th>
+                    <Th color = "#127DE2"> Company </Th>
+                    <Th color = "#127DE2"> Number of Shares </Th>
+                    <Th color = "#127DE2"> Selling Price</Th>
                     </Tr>
                 </Thead>
                 <Tbody>

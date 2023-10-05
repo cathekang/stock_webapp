@@ -8,7 +8,8 @@ import {Button,
         VStack,
         ChakraProvider,
         HStack,
-        useDisclosure} from '@chakra-ui/react';
+        useDisclosure,
+        extendTheme} from '@chakra-ui/react';
 
 import Summary from "./components/Summary.js";
 import TransactionTable from './components/TransactionTable.js';
@@ -19,6 +20,15 @@ import CandleStick from './components/CandlestickChart';
 import CandlestickModal from './components/CandlestickModal';
 
 function App() {
+  const theme = extendTheme({
+    colors: {
+      brand: {
+        100: "#90E614",
+        500: "#EC414B",
+        900: "#127DE2",
+      },
+    },
+  })
 
   const [portfolio, setPortfolio] = useState([]);
   const [transactions, setTransactions] = useState([]);
@@ -64,35 +74,49 @@ function App() {
 
   return (
     <html>
-    <ChakraProvider>
-      <BuyModal isOpen={buyModal.isOpen} onClose={buyModal.onClose}>
-        </BuyModal>
-      <SellModal isOpen={sellModal.isOpen} onClose={sellModal.onClose}>
-        </SellModal>
-      <CandlestickModal isOpen={candlestickModal.isOpen} 
-        onClose={candlestickModal.onClose}></CandlestickModal>
+    <ChakraProvider theme={theme}>
+      <BuyModal isOpen={buyModal.isOpen} 
+        onClose={buyModal.onClose}>
+      </BuyModal>
+      <SellModal isOpen={sellModal.isOpen} 
+        onClose={sellModal.onClose}>
+      </SellModal>
+      <CandlestickModal 
+        isOpen={candlestickModal.isOpen} 
+        onClose={candlestickModal.onClose}>
+      </CandlestickModal>
       <Center color = "white" padding={5}>
         <VStack spacing = {6}>
-          <Heading> Paper Trading </Heading>
+          <Heading fontWidth = "bold"> Paper Trading </Heading>
           <Text> This is the current state of your portfolio </Text>
           <ProjectDescription portfoliocost={portfolioCost} 
             portfoliovalue={portfolioValue}
             absolutegain={absoluteGain}
             percentGain = {percentGain}></ProjectDescription>
-          <HStack spacing = {6}>
-            <Button size="lg" colorScheme="green" variant="solid"
-              onClick={buyModal.onOpen}> Buy </Button>
-            <Button size="lg" colorScheme="red" variant="solid"
-              onClick={sellModal.onOpen}> Sell </Button>
-          </HStack>
           <HStack align = "stretch"  spacing={15}>
             <Summary portfolio={portfolio}> </Summary>
             <TransactionTable transactions={transactions}></TransactionTable>
             </HStack>
-          <Button size="lg" colorScheme="blue" variant="solid"
-            onClick={candlestickModal.onOpen}> Search for Stocks </Button>
-          <CandleStick symbol={candlestickSymbol} 
-            candlestick_data={candlstickData}></CandleStick>
+            <HStack align = "stretch" spacing = {15}>
+              <Button size="lg" 
+                bg = "brand.100" 
+                colorScheme="green" 
+                variant="solid" 
+                onClick={buyModal.onOpen}> Buy </Button>
+              <Button size="lg" 
+                bg = "brand.500" 
+                colorScheme="red"
+                variant="solid" 
+                onClick={sellModal.onOpen}> Sell </Button>
+              <Button size="lg"
+                bg = "brand.900" 
+                colorScheme="blue" 
+                variant="solid" 
+                onClick={candlestickModal.onOpen}> Search for Stocks </Button>
+              <CandleStick 
+                symbol={candlestickSymbol} 
+                candlestick_data={candlstickData}></CandleStick>
+            </HStack>
         </VStack>
       </Center>
     </ChakraProvider>
