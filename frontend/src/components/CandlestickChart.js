@@ -2,7 +2,6 @@ import { Stack } from "@chakra-ui/react";
 import React from "react";
 import Chart from "react-apexcharts";
 export default function CandleStick({symbol, candlestick_data}) {
-	console.log(candlestick_data)
 const data = {
 	series: [
 		{
@@ -15,7 +14,7 @@ const data = {
 			height: 350,
 			zoom: {
 				autoScaleYaxis: true
-			}
+			},
 		},
 		title: {
 			text: symbol,
@@ -26,6 +25,13 @@ const data = {
 		},
 		noData: {
 			text: 'Loading...'
+		},
+		tooltip: {
+			enabled: true,
+			theme: "light",
+			onDatasetHover: {
+				highlightDataSeries: true,
+			}
 		},
 		xaxis: {
 			type: 'datetime',

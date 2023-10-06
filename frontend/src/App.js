@@ -113,7 +113,8 @@ function App() {
                 colorScheme="blue" 
                 variant="solid" 
                 onClick={candlestickModal.onOpen}> Search for Stocks </Button>
-              <CandleStick 
+              <CandleStick
+                bg = "brand.900"
                 symbol={candlestickSymbol} 
                 candlestick_data={candlstickData}></CandleStick>
             </HStack>

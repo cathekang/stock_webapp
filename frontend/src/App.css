@@ -31,6 +31,9 @@ html{
   width: '100vw';
   height: '100vh';
 }
+.apexcharts-tooltip {
+	color: gray;
+}
 .App-link {
   color: #61dafb;
 }
