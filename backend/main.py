@@ -1,11 +1,9 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
-from pandas import Timestamp
 from pydantic import BaseModel
 import yfinance as yf
 from datetime import datetime as dt
-import numpy as np
 
 app = FastAPI()
 
