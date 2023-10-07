@@ -1,5 +1,5 @@
 
-Installation: 
+**Installation:**
 
 After pulling the code from Github, open the terminal. 
 
@@ -22,7 +22,7 @@ For the frontend, there are several installations:
 `npm i react-apexcharts apexcharts bootstrap –legacy-peer-deps`
 
 
-To run:
+**To run:**
 
 For the backend:
 
@@ -36,7 +36,7 @@ For the frontend:
 3.  Type `npm start`
 
 
-2nd Option:
+**2nd Option:**
 If one has Dockers Desktop, one can run it by:
 
 For the backend:
